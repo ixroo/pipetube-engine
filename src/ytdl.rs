@@ -205,6 +205,7 @@ impl YtdlManager {
     }
 
     /// Resolve exact direct CDN stream URL for a given format
+    #[allow(dead_code)]
     pub async fn resolve_stream(&self, raw_url: &str, raw_format_id: &str) -> Result<String, YtdlError> {
         let canonical_url = self.validate_url(raw_url)?;
         let format_id = self.validate_format_id(raw_format_id)?;

@@ -1367,19 +1367,37 @@
 
         const dlStart = performance.now();
         let frameIdx = 0;
+        let downloadStopwatch = null;
+        let downloadPollTimer = null;
+        let downloadTimeoutTimer = null;
+
         const tick = () => {
-          const elapsed = ((performance.now() - dlStart) / 1000).toFixed(1);
+          const elapsedSec = (performance.now() - dlStart) / 1000;
+          const elapsed = elapsedSec.toFixed(1);
           downloadHudTimer.textContent = `${elapsed}s`;
           const frame = BRAILLE_SPINNER[frameIdx % BRAILLE_SPINNER.length];
           downloadHudSpinner.textContent = frame;
           btn.innerHTML = `<span class="text-lime font-bold">${frame}</span> <span>${isAudio ? 'PREPARING' : 'MUXING'} ${elapsed}s</span>`;
           frameIdx++;
+
+          if (elapsedSec > 4 && elapsedSec <= 10) {
+            downloadHudBar.style.width = '70%';
+            downloadHudMsg.textContent = isAudio ? 'Fetching high-speed audio stream from server cache...' : 'Parallel fragment download & remux in progress...';
+          } else if (elapsedSec > 10 && elapsedSec <= 25) {
+            downloadHudBar.style.width = '85%';
+            downloadHudMsg.textContent = 'Processing large video file on server (Full HD 1080p)...';
+          } else if (elapsedSec > 25) {
+            downloadHudBar.style.width = '92%';
+            downloadHudMsg.textContent = 'Packaging MP4 stream & handshaking to your browser...';
+          }
         };
         tick();
-        const downloadStopwatch = setInterval(tick, 80);
+        downloadStopwatch = setInterval(tick, 80);
 
         const resetUi = (confirmed = true, filename = 'media.mp4') => {
-          clearInterval(downloadStopwatch);
+          if (downloadStopwatch) clearInterval(downloadStopwatch);
+          if (downloadPollTimer) clearInterval(downloadPollTimer);
+          if (downloadTimeoutTimer) clearTimeout(downloadTimeoutTimer);
 
           document.cookie = `dl_token_${downloadToken}=; Path=/; Max-Age=0; SameSite=Lax`;
 
@@ -1398,7 +1416,7 @@
               btn.innerHTML = originalText;
               btn.disabled = false;
               downloadHud.classList.add('hidden');
-            }, 2800);
+            }, 3000);
           } else {
             btn.className = originalClass;
             btn.innerHTML = originalText;
@@ -1427,9 +1445,9 @@
             return;
           }
 
-          downloadHudBar.style.width = '65%';
-          downloadHudBadge.textContent = 'PIPELINE: STREAM-COPY MUXING';
-          downloadHudMsg.textContent = isAudio ? 'Piping raw audio to browser download manager...' : 'FFmpeg stream-copy active. Handshaking to browser download daemon...';
+          downloadHudBar.style.width = '50%';
+          downloadHudBadge.textContent = 'PIPELINE: MULTITHREAD CHUNK STREAM';
+          downloadHudMsg.textContent = isAudio ? 'Piping raw audio to browser download manager...' : 'Server chunk-copy active. Initiating browser download...';
 
           const downloadLink = document.createElement('a');
           downloadLink.href = `${data.data.proxy_url}&token=${downloadToken}`;
@@ -1438,17 +1456,16 @@
           downloadLink.click();
           document.body.removeChild(downloadLink);
 
-          const downloadPollTimer = setInterval(() => {
+          downloadPollTimer = setInterval(() => {
             if (document.cookie.includes(cookieKey)) {
-              clearInterval(downloadPollTimer);
               resetUi(true, data.data.filename);
             }
           }, 100);
 
-          setTimeout(() => {
-            clearInterval(downloadPollTimer);
-            resetUi(true, data.data.filename);
-          }, 12000);
+          downloadTimeoutTimer = setTimeout(() => {
+            resetUi(false);
+            alert('Proses download memakan waktu lebih dari 90 detik. Untuk video berdurasi panjang, coba pilih resolusi 720p atau Audio m4a untuk proses yang jauh lebih cepat.');
+          }, 90000);
 
         } catch (err) {
           resetUi(false);

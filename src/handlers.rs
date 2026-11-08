@@ -12,7 +12,6 @@ use axum::{
 };
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use reqwest::Client;
-use std::process::Stdio;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::process::Command;
@@ -58,6 +57,21 @@ pub async fn resolve_format(
         return Err((status, Json(ApiResponse::err("RATE_LIMITED", msg))));
     }
 
+    // Strict URL and format_id validation
+    if let Err(_) = state.ytdl.validate_url(&payload.url) {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(ApiResponse::err("INVALID_URL", "Invalid YouTube video URL.")),
+        ));
+    }
+
+    if let Err(_) = state.ytdl.validate_format_id(&payload.format_id) {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(ApiResponse::err("INVALID_FORMAT_ID", "Invalid format ID.")),
+        ));
+    }
+
     let is_audio = payload.format_id.to_lowercase().contains("audio")
         || ["139", "140", "249", "250", "251", "ba"].iter().any(|k| payload.format_id.contains(k));
     let ext = if is_audio { "m4a" } else { "mp4" };
@@ -76,25 +90,17 @@ pub async fn resolve_format(
     let final_title = if safe_title.is_empty() { "video" } else { safe_title };
     let filename = format!("{}.{}", final_title, ext);
 
-    match state.ytdl.resolve_stream(&payload.url, &payload.format_id).await {
-        Ok(direct_url) => {
-            let encoded_url = utf8_percent_encode(&payload.url, NON_ALPHANUMERIC).to_string();
-            let encoded_name = utf8_percent_encode(&filename, NON_ALPHANUMERIC).to_string();
-            let audio_param = if is_audio { "&audio=1" } else { "" };
-            let proxy_url = format!("/api/proxy?url={}&format_id={}{}&filename={}", encoded_url, payload.format_id, audio_param, encoded_name);
+    let encoded_url = utf8_percent_encode(&payload.url, NON_ALPHANUMERIC).to_string();
+    let encoded_name = utf8_percent_encode(&filename, NON_ALPHANUMERIC).to_string();
+    let audio_param = if is_audio { "&audio=1" } else { "" };
+    let proxy_url = format!("/api/proxy?url={}&format_id={}{}&filename={}", encoded_url, payload.format_id, audio_param, encoded_name);
 
-            Ok(Json(ApiResponse::ok(ResolveResponse {
-                direct_url,
-                proxy_url,
-                format_id: payload.format_id,
-                filename,
-            })))
-        }
-        Err(err) => {
-            let (status, code, message) = map_ytdl_error(err);
-            Err((status, Json(ApiResponse::err(code, message))))
-        }
-    }
+    Ok(Json(ApiResponse::ok(ResolveResponse {
+        direct_url: proxy_url.clone(),
+        proxy_url,
+        format_id: payload.format_id,
+        filename,
+    })))
 }
 
 /// Handler for GET /api/proxy (Zero-disk, pure async byte pipe)
@@ -149,7 +155,7 @@ pub async fn stream_proxy(
             .and_then(|s| s.split('&').next())
             .unwrap_or("media");
 
-        let cache_dir = std::path::Path::new("/tmp/pipetube_cache");
+        let cache_dir = std::path::Path::new("/var/cache/pipetube");
         let _ = tokio::fs::create_dir_all(cache_dir).await;
 
         let cache_file = cache_dir.join(format!("{}_{}.{}", video_id, fid, ext));
@@ -178,6 +184,8 @@ pub async fn stream_proxy(
                 cmd.args([
                     "--no-warnings",
                     "--no-playlist",
+                    "-N",
+                    "4",
                     "-f",
                     &format!("{}/ba[ext=m4a]/ba", fid),
                     "--force-ipv4",
@@ -189,6 +197,8 @@ pub async fn stream_proxy(
                 cmd.args([
                     "--no-warnings",
                     "--no-playlist",
+                    "-N",
+                    "6",
                     "-f",
                     &format!("{}+ba/{}+140/best", fid, fid),
                     "--merge-output-format",

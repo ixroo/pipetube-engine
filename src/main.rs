@@ -94,7 +94,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Background cache purger: clean temporary stream cache older than 20 minutes
     tokio::spawn(async {
-        let cache_dir = std::path::PathBuf::from("/tmp/pipetube_cache");
+        let cache_dir = std::path::PathBuf::from("/var/cache/pipetube");
         let _ = tokio::fs::create_dir_all(&cache_dir).await;
         loop {
             tokio::time::sleep(Duration::from_secs(300)).await;
