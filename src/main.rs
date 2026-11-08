@@ -92,6 +92,29 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!(" ZERO MEDIA STORAGE PHILOSOPHY ACTIVE");
     info!("=====================================================");
 
+    // Background cache purger: clean temporary stream cache older than 20 minutes
+    tokio::spawn(async {
+        let cache_dir = std::path::PathBuf::from("/tmp/pipetube_cache");
+        let _ = tokio::fs::create_dir_all(&cache_dir).await;
+        loop {
+            tokio::time::sleep(Duration::from_secs(300)).await;
+            if let Ok(mut entries) = tokio::fs::read_dir(&cache_dir).await {
+                let now = std::time::SystemTime::now();
+                while let Ok(Some(entry)) = entries.next_entry().await {
+                    if let Ok(meta) = entry.metadata().await {
+                        if let Ok(modified) = meta.modified() {
+                            if let Ok(age) = now.duration_since(modified) {
+                                if age > Duration::from_secs(1200) {
+                                    let _ = tokio::fs::remove_file(entry.path()).await;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app)
         .with_graceful_shutdown(shutdown_signal())
