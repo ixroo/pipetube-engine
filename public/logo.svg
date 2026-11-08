@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <defs>
+    <linearGradient id="logo-lime" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CCFF00"/>
+      <stop offset="100%" stop-color="#99EE00"/>
+    </linearGradient>
+    <linearGradient id="logo-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181C"/>
+      <stop offset="100%" stop-color="#0E0E12"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Icon Mark (left) -->
+  <g transform="translate(6, 6)">
+    <rect x="0" y="0" width="68" height="68" rx="18" fill="url(#logo-bg)" stroke="#27272A" stroke-width="2.5"/>
+    <line x1="16" y1="26" x2="28" y2="26" stroke="url(#logo-lime)" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="16" y1="42" x2="28" y2="42" stroke="url(#logo-lime)" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M 33 22 C 33 20.5 34.8 19.5 36.1 20.3 L 55 32.8 C 56.3 33.6 56.3 35.4 55 36.2 L 36.1 48.7 C 34.8 49.5 33 48.5 33 47 Z" fill="url(#logo-lime)"/>
+  </g>
+  
+  <!-- Typography (right) -->
+  <text x="88" y="47" font-family="'Space Grotesk', 'JetBrains Mono', -apple-system, sans-serif" font-size="28" font-weight="800" letter-spacing="1.5" fill="#F4F4F5">
+    PIPE<tspan fill="#CCFF00">TUBE</tspan>
+  </text>
+  <text x="89" y="62" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" letter-spacing="2" fill="#71717A">
+    ZERO-DISK STREAMER
+  </text>
+</svg>

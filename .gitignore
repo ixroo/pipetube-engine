@@ -1,0 +1,4 @@
+target/
+app.zip
+*.log
+.DS_Store

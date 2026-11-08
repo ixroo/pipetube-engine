@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#0A0A0B] text-[#F4F4F5] antialiased selection:bg-[#CCFF00] selection:text-[#0A0A0B]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How It Works - Complete Guide to Downloading YouTube Videos &amp; Audio | PipeTube</title>
+  <meta name="title" content="How It Works - Complete Guide to Downloading YouTube Videos &amp; Audio | PipeTube">
+  <meta name="description" content="Learn how PipeTube works. Step-by-step guide to download YouTube videos, Shorts, and MP3 audio on iPhone, Android, Windows, and Mac with our zero-disk streaming architecture.">
+  <meta name="keywords" content="how to download youtube videos, how to use pipetube, save youtube video on iphone, download youtube to android, zero-disk stream pipe tutorial">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://pipetube.my.id/how-it-works/">
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="alternate icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="theme-color" content="#0A0A0B">
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: '#0A0A0B',
+            surface: '#121215',
+            'surface-card': '#17171C',
+            'surface-hover': '#1F1F26',
+            hairline: '#27272A',
+            lime: '#CCFF00',
+            vermilion: '#FF3B00',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0A0A0B; }
+    ::-webkit-scrollbar-thumb { background: #27272A; }
+    .crosshair-box { position: relative; }
+    .crosshair-box::before { content: '+'; position: absolute; top: -6px; left: -6px; font-family: monospace; font-size: 10px; color: #71717A; }
+    .crosshair-box::after { content: '+'; position: absolute; bottom: -6px; right: -6px; font-family: monospace; font-size: 10px; color: #71717A; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pipetube.my.id/" },
+      { "@type": "ListItem", "position": 2, "name": "How It Works", "item": "https://pipetube.my.id/how-it-works/" }
+    ]
+  }
+  </script>
+</head>
+<body class="min-h-full flex flex-col font-sans bg-canvas text-[#F4F4F5] antialiased">
+
+  <!-- Header -->
+  <header class="w-full border-b border-hairline bg-[#0E0E11]/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2 group">
+          <img src="/favicon.svg" alt="PipeTube Logo" class="w-6 h-6 rounded-md group-hover:scale-105 transition-transform duration-200">
+          <span class="font-mono font-bold text-base tracking-wider uppercase text-[#F4F4F5]">PIPE<span class="text-lime">TUBE</span></span>
+        </a>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-5 font-mono text-xs text-[#A1A1AA]">
+        <a href="/" class="hover:text-lime transition-colors" data-i18n="nav_home">Home</a>
+        <a href="/youtube-to-mp3/" class="hover:text-lime transition-colors" data-i18n="nav_mp3">YouTube to MP3</a>
+        <a href="/youtube-shorts-downloader/" class="hover:text-lime transition-colors" data-i18n="nav_shorts">Shorts Downloader</a>
+        <a href="/youtube-to-mp4/" class="hover:text-lime transition-colors" data-i18n="nav_mp4">1080p MP4</a>
+        <a href="/how-it-works/" class="text-lime font-bold" data-i18n="nav_howto">How It Works</a>
+        <a href="/#faq" class="hover:text-[#F4F4F5] transition-colors" data-i18n="nav_faq">FAQ</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <div class="relative flex items-center">
+          <div class="flex items-center bg-surface border border-hairline px-2.5 py-1.5 text-xs font-mono">
+            <span class="mr-1.5 text-sm" id="lang-flag">🌐</span>
+            <select id="language-select" aria-label="Select Language" class="bg-transparent text-xs font-mono text-[#F4F4F5] focus:outline-none cursor-pointer">
+              <option value="en" class="bg-[#141416] text-[#F4F4F5]">English (EN)</option>
+              <option value="es" class="bg-[#141416] text-[#F4F4F5]">Español (ES)</option>
+              <option value="pt" class="bg-[#141416] text-[#F4F4F5]">Português (PT)</option>
+              <option value="id" class="bg-[#141416] text-[#F4F4F5]">Bahasa Indonesia (ID)</option>
+              <option value="de" class="bg-[#141416] text-[#F4F4F5]">Deutsch (DE)</option>
+              <option value="fr" class="bg-[#141416] text-[#F4F4F5]">Français (FR)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="w-full max-w-4xl mx-auto px-4 py-12 flex-1">
+    
+    <!-- Title -->
+    <div class="text-center mb-12">
+      <span class="font-mono text-xs text-lime uppercase tracking-widest" data-i18n="hiw_subtitle_tag">// USER MANUAL &amp; ARCHITECTURE</span>
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight uppercase mt-2 mb-4" data-i18n="hiw_main_title">
+        HOW PIPETUBE WORKS
+      </h1>
+      <p class="font-mono text-xs sm:text-sm text-[#A1A1AA] max-w-2xl mx-auto leading-relaxed" data-i18n="hiw_main_desc">
+        A comprehensive guide on downloading YouTube videos, Shorts, and MP3 audio files on any operating system using our zero-disk streaming protocol.
+      </p>
+    </div>
+
+    <!-- 3 Simple Steps Section -->
+    <section class="mb-12">
+      <h2 class="text-xl font-bold uppercase mb-6 font-mono text-[#F4F4F5]" data-i18n="hiw_steps_title">
+        THE 3-STEP PROCESS
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+        <div class="bg-surface border border-hairline p-6 crosshair-box">
+          <div class="text-lime text-3xl font-bold mb-3">01</div>
+          <h3 class="font-bold text-sm text-[#F4F4F5] uppercase mb-2" data-i18n="step1_title">1. COPY VIDEO URL</h3>
+          <p class="text-[#A1A1AA] leading-relaxed" data-i18n="step1_desc">
+            Open YouTube on your browser or mobile app. Locate the video or Short you wish to save and copy its link from the address bar or share button.
+          </p>
+        </div>
+        <div class="bg-surface border border-hairline p-6 crosshair-box">
+          <div class="text-lime text-3xl font-bold mb-3">02</div>
+          <h3 class="font-bold text-sm text-[#F4F4F5] uppercase mb-2" data-i18n="step2_title">2. PASTE &amp; CHOOSE QUALITY</h3>
+          <p class="text-[#A1A1AA] leading-relaxed" data-i18n="step2_desc">
+            Paste the link into the PipeTube box above. Our zero-disk pipeline extracts the formats in milliseconds. Choose 1080p, 720p, or high-bitrate MP3.
+          </p>
+        </div>
+        <div class="bg-surface border border-hairline p-6 crosshair-box">
+          <div class="text-lime text-3xl font-bold mb-3">03</div>
+          <h3 class="font-bold text-sm text-[#F4F4F5] uppercase mb-2" data-i18n="step3_title">3. INSTANT FAST DOWNLOAD</h3>
+          <p class="text-[#A1A1AA] leading-relaxed" data-i18n="step3_desc">
+            Click the Download button. The direct video stream starts immediately in your browser with no queues and no file conversion lag.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Architecture: What is Zero-Disk? -->
+    <section class="bg-surface border border-hairline p-6 sm:p-8 mb-12 font-mono text-xs leading-relaxed">
+      <div class="text-lime font-bold text-sm mb-2" data-i18n="hiw_arch_tag">⚡ TECHNICAL ARCHITECTURE</div>
+      <h2 class="text-lg sm:text-xl font-bold text-[#F4F4F5] uppercase mb-4" data-i18n="hiw_arch_title">
+        WHAT IS ZERO-DISK DIRECT STREAMING?
+      </h2>
+      <p class="text-[#A1A1AA] mb-4" data-i18n="hiw_arch_p1">
+        Traditional video downloaders download the entire multi-gigabyte video onto their server's hard disk first, convert it, and then send it to you. This causes high server load, long queue times, and major privacy risks.
+      </p>
+      <p class="text-[#A1A1AA] mb-4" data-i18n="hiw_arch_p2">
+        <strong>PipeTube uses an asynchronous Rust-based streaming pipe:</strong> media bytes flow in real-time through volatile RAM memory directly to your browser download manager. Nothing is written to physical hard disks, ensuring:
+      </p>
+      <ul class="list-disc pl-5 space-y-2 text-[#F4F4F5]">
+        <li data-i18n="hiw_arch_point1"><strong class="text-lime">Zero Waiting:</strong> Downloads start instantly with no rendering lag.</li>
+        <li data-i18n="hiw_arch_point2"><strong class="text-lime">100% Privacy:</strong> No video or audio files are ever saved or stored on our servers.</li>
+        <li data-i18n="hiw_arch_point3"><strong class="text-lime">Maximum ISP Speed:</strong> Piped at the full bandwidth rate of your internet connection.</li>
+      </ul>
+    </section>
+
+    <!-- Device Walkthroughs (iPhone & Android) -->
+    <section class="mb-12 font-mono text-xs">
+      <h2 class="text-xl font-bold uppercase mb-6 text-[#F4F4F5]" data-i18n="hiw_device_title">
+        DEVICE GUIDES (IPHONE &amp; ANDROID)
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-surface border border-hairline p-6">
+          <div class="text-lime font-bold text-sm mb-2" data-i18n="hiw_iphone_title">🍏 IPHONE &amp; IPAD (iOS SAFARI)</div>
+          <ol class="list-decimal pl-5 space-y-2 text-[#A1A1AA]">
+            <li data-i18n="hiw_iphone_s1">Copy the YouTube video or Shorts link.</li>
+            <li data-i18n="hiw_iphone_s2">Open Safari and visit pipetube.my.id.</li>
+            <li data-i18n="hiw_iphone_s3">Paste the URL and tap Get Download.</li>
+            <li data-i18n="hiw_iphone_s4">Tap Download. In Safari, tap the download icon in the address bar.</li>
+            <li data-i18n="hiw_iphone_s5">Tap the video file, select Share, and tap "Save Video" to save to your Camera Roll!</li>
+          </ol>
+        </div>
+        <div class="bg-surface border border-hairline p-6">
+          <div class="text-lime font-bold text-sm mb-2" data-i18n="hiw_android_title">🤖 ANDROID (CHROME &amp; SAMSUNG BROWSER)</div>
+          <ol class="list-decimal pl-5 space-y-2 text-[#A1A1AA]">
+            <li data-i18n="hiw_android_s1">Copy the YouTube URL from the YouTube app.</li>
+            <li data-i18n="hiw_android_s2">Open Chrome and navigate to pipetube.my.id.</li>
+            <li data-i18n="hiw_iphone_s3">Paste the URL and tap Get Download.</li>
+            <li data-i18n="hiw_android_s4">Select your preferred quality and tap Download.</li>
+            <li data-i18n="hiw_android_s5">The MP4 video or MP3 audio file is instantly accessible in your Gallery or Downloads folder.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to Downloader CTA -->
+    <div class="text-center pt-6 border-t border-hairline">
+      <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-lime text-canvas font-mono font-bold uppercase tracking-wider hover:bg-[#b8e600] transition-colors" data-i18n="hiw_cta_btn">
+        START DOWNLOADING NOW &rarr;
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full border-t border-hairline bg-[#0E0E11] py-8 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-xs text-[#71717A]">
+      <div>&copy; 2026 PipeTube. All rights reserved.</div>
+      <div class="flex gap-4">
+        <a href="/terms/" class="hover:text-lime">Terms</a>
+        <a href="/privacy/" class="hover:text-lime">Privacy</a>
+        <a href="/dmca/" class="hover:text-lime">DMCA</a>
+        <a href="/contact/" class="hover:text-lime">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/i18n.js"></script>
+</body>
+</html>

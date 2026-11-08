@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="pt-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CCFF00"/>
+      <stop offset="100%" stop-color="#A6E600"/>
+    </linearGradient>
+    <linearGradient id="pt-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181C"/>
+      <stop offset="100%" stop-color="#0E0E12"/>
+    </linearGradient>
+    <filter id="pt-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Rounded Squircle -->
+  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#pt-bg)" stroke="#27272A" stroke-width="3"/>
+  
+  <!-- Pipe Stream Conduits -->
+  <line x1="22" y1="38" x2="40" y2="38" stroke="url(#pt-grad)" stroke-width="6" stroke-linecap="round"/>
+  <line x1="22" y1="62" x2="40" y2="62" stroke="url(#pt-grad)" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Play Button Triangle Core -->
+  <path d="M 46 32 C 46 29.8 48.5 28.5 50.4 29.6 L 77.4 47.6 C 79.2 48.8 79.2 51.2 77.4 52.4 L 50.4 70.4 C 48.5 71.5 46 70.2 46 68 Z" fill="url(#pt-grad)" filter="url(#pt-glow)"/>
+</svg>
